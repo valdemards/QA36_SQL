@@ -1,12 +1,12 @@
- --  1. Вывести всех работников чьи зарплаты есть в базе, вместе с зарплатами.
- select employee_name 
+ --  1. Вывести всех работников чьи зарплаты есть в базе, вместе с зарплатами
+ select employee_name, s.month_salary 
  from 	employees e
  join 	employee_salary es 
  on 	e.id = es.employee_id 
  join 	salary s 
  on 	es.salary_id = s.id 
  
--- 2. Вывести всех работников у которых ЗП меньше 2000.
+--  2. Вывести всех работников у которых ЗП меньше 2000.
  select e.employee_name, s.month_salary 
  from 	employees e
  join 	employee_salary es 
@@ -38,7 +38,7 @@
  join 	roles r 
  on 	re.role_id = r.id 
  
--- 7. Вывести имена и должность только Java разработчиков.
+--  7. Вывести имена и должность только Java разработчиков.
  select e.employee_name, r.role_name 
  from 	employees e 
  left join roles_employee re 
@@ -65,7 +65,7 @@
  on 	re.role_id = r.id 
  where 	r.role_name like '%QA engineer'  
  
--- 10. Вывести имена и должность ручных QA инженеров.
+--  10. Вывести имена и должность ручных QA инженеров.
  select e.employee_name, r.role_name 
  from 	employees e 
  left join roles_employee re 
@@ -83,7 +83,7 @@
  on 	re.role_id = r.id 
  where 	r.role_name like '%Automation QA%'  
  
--- 12. Вывести имена и зарплаты Junior специалистов 
+-- 12. Вывести имена и зарплаты Junior специалистов
  create table employees_olap as
  select e.employee_name, 
  		r.role_name as employee_role, 
@@ -128,7 +128,7 @@ ALTER SEQUENCE employee_salary_id_seq RESTART with 1;
  from 	employees_olap
  where 	employee_role  like '%Python developer%' 
  
--- 17. Вывести имена и зарплаты Junior Python разработчиков
+--  17. Вывести имена и зарплаты Junior Python разработчиков
  select employee_name, month_salary 
  from 	employees_olap
  where 	employee_role  like '%Junior Python%' 
@@ -143,12 +143,12 @@ ALTER SEQUENCE employee_salary_id_seq RESTART with 1;
  from 	employees_olap
  where 	employee_role  like '%Senior Java%' 
  
--- 20. Вывести зарплаты Junior QA инженеров
+--  20. Вывести зарплаты Junior QA инженеров
  select month_salary 
  from 	employees_olap
  where 	employee_role  like '%Junior%QA%' 
  
--- 21. Вывести среднюю зарплату всех Junior специалистов
+--  21. Вывести среднюю зарплату всех Junior специалистов
  select round(avg(month_salary), 2) as avg_monthly_salary
  from 	employees_olap
  where 	employee_role  like '%Junior%QA%' 
@@ -183,7 +183,7 @@ ALTER SEQUENCE employee_salary_id_seq RESTART with 1;
  from 	employees_olap
  where 	employee_role  like '%developer%'   
  
--- 28. Вывести фонд (сумму) зарплаты разработчиков.
+-- 28. Вывести фонд (сумму) зарплаты разработчиков..
  select sum(month_salary) as montly_salary_sum
  from 	employees_olap
  where 	employee_role  like '%developer%'   
