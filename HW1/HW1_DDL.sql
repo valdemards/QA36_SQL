@@ -49,6 +49,7 @@ create table if not exists roles (
 	id serial primary key,
 	role_name integer not null unique
 )
+
 alter table roles alter column role_name SET DATA TYPE varchar(50);
 
 truncate TABLE roles ;
@@ -88,15 +89,13 @@ create table if not exists roles_employee (
 	id serial primary key,
 	employee_id integer not null unique,
 	role_id integer not null,
-	CONSTRAINT fk_employee
       FOREIGN KEY(employee_id) 
 	  REFERENCES employees(id),
-	CONSTRAINT fk_role
       FOREIGN KEY(role_id) 
 	  REFERENCES roles(id)
 )
 
-truncate TABLE employee_salary ;
-ALTER SEQUENCE employee_salary_id_seq RESTART with 1;
+truncate TABLE roles_employee ;
+ALTER SEQUENCE roles_employee_id_seq RESTART with 1;
 
 --===========================================================
