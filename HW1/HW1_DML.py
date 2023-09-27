@@ -29,8 +29,12 @@ def insert_salary(rows_number):
 
 # Наполнить таблицу employee_salary 40 строками:
 # - в 10 строк из 40 вставить несуществующие employee_id
-def insert_employee_salary(rows_number, employees_num, salaries_num, not_exist_number):
+def insert_employee_salary(rows_number, not_exist_number):
     cursor = conn.cursor()
+    cursor.execute("select count(id) from employees;")
+    employees_num = cursor.fetchone()[0]
+    cursor.execute("select count(id) from salary;")
+    salaries_num = cursor.fetchone()[0]
     for i in range(1, rows_number + 1): 
         salary_id = random.randint(1, salaries_num)
         if i <= rows_number - not_exist_number:
@@ -41,8 +45,10 @@ def insert_employee_salary(rows_number, employees_num, salaries_num, not_exist_n
     conn.close()
  
 # Наполнить таблицу roles_employee 40 строками:
-def insert_employee_roles(rows_number, roles_number):
+def insert_employee_roles(rows_number):
     cursor = conn.cursor()
+    cursor.execute("select count(id) from roles;")
+    roles_number = cursor.fetchone()[0]
     for i in range(1, rows_number + 1): 
         cursor.execute(f"INSERT INTO roles_employee (employee_id, role_id) VALUES ({i}, {random.randint(1, roles_number)});")
     conn.commit()
@@ -50,7 +56,6 @@ def insert_employee_roles(rows_number, roles_number):
 
 # insert_employees(70)
 # insert_salary(15)
-# insert_employee_salary(40, 70, 14, 10)
-# insert_employee_roles(40, 20)
-
+# insert_employee_salary(40, 10)
+# insert_employee_roles(40)
 
